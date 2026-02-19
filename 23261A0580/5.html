@@ -1,0 +1,15 @@
+<script>
+function gcd(a, b) {
+    while (b !== 0) {
+        let temp = b;
+        b = a % b;
+        a = temp;
+    }
+    return a;
+}
+
+let a = parseInt(prompt("enter the first number"));
+let b = parseInt(prompt("enter the second number"));
+
+document.writeln("GCD:", gcd(a, b));
+</script>
