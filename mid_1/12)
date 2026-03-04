@@ -1,0 +1,25 @@
+#Perform Count, Limit, Sort, and Skip operations on the given collections using MongoDB.
+
+
+const { MongoClient } = require('mongodb');
+const url = 'mongodb://localhost:27017';
+const client = new MongoClient(url);
+async function main() {
+    await client.connect();
+    const db = client.db('myDatabase');
+    const collection = db.collection('students');
+
+    const total = await collection.countDocuments();
+    console.log("Total Documents:", total);
+
+    const sortedData = await collection.find().sort({ name: 1 }).toArray();
+    console.log("Sorted Data:", sortedData);
+
+    const limitedData = await collection.find().limit(2).toArray();
+    console.log("Limited Data (First 2):", limitedData);
+
+    const skippedData = await collection.find().skip(2).toArray();
+    console.log("Skipped Data (Skipping first 2):", skippedData);
+    await client.close();
+}
+main().catch(console.error);
