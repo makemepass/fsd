@@ -1,0 +1,37 @@
+# Write a NodeJs program to Implement a program with basic commands (CRUD) on databases and collections using MongoDB
+
+
+const { MongoClient } = require('mongodb');
+const url = 'mongodb://localhost:27017';
+const client = new MongoClient(url);
+const dbName = 'myDatabase';
+async function main() {
+    await client.connect();
+    console.log('Connected to MongoDB');
+    const db = client.db(dbName);
+    const collection = db.collection('students');
+
+    await collection.insertOne({ name: "Noshank", age: 21, course: "CSE" });
+    await collection.insertMany([
+        { name: "Alice", age: 22, course: "IT" },
+        { name: "Bob", age: 23, course: "ECE" }
+    ]);
+    console.log('Documents inserted');
+
+    const allStudents = await collection.find().toArray();
+    console.log('All Students:', allStudents);
+    const oneStudent = await collection.findOne({ name: "Noshank" });
+    console.log('Single Student:', oneStudent);
+
+    await collection.updateOne(
+        { name: "Noshank" }, 
+        { $set: { age: 22 } }
+    );
+    console.log('Document updated');
+
+    await collection.deleteOne({ name: "Bob" });
+    console.log('Document deleted');
+    await client.close();
+}
+
+main().catch(console.error);
