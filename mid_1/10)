@@ -1,0 +1,12 @@
+#Write a Node JS program to demonstrate events and call back functions.
+
+
+const EventEmitter = require('events');
+const myEmitter = new EventEmitter();
+function myCallback() {
+    console.log("The callback was executed because the event fired!");
+}
+myEmitter.on('startTask', myCallback);
+console.log("Program started...");
+myEmitter.emit('startTask');
+console.log("Program ended.");
