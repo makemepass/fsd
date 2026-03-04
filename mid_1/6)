@@ -1,0 +1,27 @@
+#Write a Node JS program to demonstrate user defined modules
+
+
+
+#mathUtils.js(file_name)
+function add(a, b) {
+    return a + b;
+}
+function multiply(a, b) {
+    return a * b;
+}
+const PI = 3.1415;
+module.exports = {
+    add,
+    multiply,
+    PI
+};
+
+
+#app.js(file_name)
+const math = require('./mathUtils');
+const sum = math.add(10, 5);
+const product = math.multiply(10, 5);
+const circleConstant = math.PI;
+console.log("Sum:", sum);
+console.log("Product:", product);
+console.log("Value of PI:", circleConstant);
