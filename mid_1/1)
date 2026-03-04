@@ -1,0 +1,42 @@
+#Create an application to setup node JS environment and display “Hello World.”
+
+install Node.js:
+Install nodejs from https://nodejs.org after installing check
+node -v
+npm -v
+
+create a new project folder
+mkdir hello_node
+cd hello_node
+
+Initialize Node.js application
+npm init -y
+
+create a file app.js
+console.log("Hello world")
+
+run program
+node app.js
+
+output: hello world
+
+
+
+
+
+//to display helloworld on browser do below steps
+
+install express package
+npm install express
+
+create file called serer.js
+const express=require("express")
+const app=express()
+app.get("/",(req,res)=>{res.send("hello world");
+});
+applisten(3000,()=>{
+console.log("server running on http://localhost:3000");
+});
+
+run:node server.js
+open:http://localhost:3000
