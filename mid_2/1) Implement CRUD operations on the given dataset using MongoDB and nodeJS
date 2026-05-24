@@ -1,0 +1,67 @@
+const { MongoClient, ObjectId } = require('mongodb');
+
+const url = 'mongodb://localhost:27017'; 
+const dbName = 'inventoryDB';
+const collectionName = 'products';
+
+async function main() {
+    const client = new MongoClient(url);
+
+    try {
+        await client.connect();
+        console.log('Successfully connected to MongoDB server');
+        
+        const db = client.db(dbName);
+        const collection = db.collection(collectionName);
+
+        console.log('\n--- Executing CREATE ---');
+        const newProduct = {
+            name: 'Wireless Mouse',
+            price: 29.99,
+            category: 'Electronics',
+            stock: 150,
+            tags: ['accessory', 'wireless'],
+            createdAt: new Date()
+        };
+        
+        const createResult = await collection.insertOne(newProduct);
+        const generatedId = createResult.insertedId;
+        console.log(`Document inserted with _id: ${generatedId}`);
+
+        console.log('\n--- Executing READ ---');
+        
+        const foundProduct = await collection.findOne({ _id: generatedId });
+        console.log('Found Document by ID:', foundProduct);
+
+        const cheapElectronics = await collection.find({ 
+            category: 'Electronics', 
+            price: { $lt: 50 } 
+        }).toArray();
+        console.log(`Found ${cheapElectronics.length} cheap electronics items.`);
+
+        console.log('\n--- Executing UPDATE ---');
+        
+        const updateResult = await collection.updateOne(
+            { _id: generatedId },
+            { 
+                $set: { price: 24.99 },       
+                $inc: { stock: -10 }          
+            }
+        );
+        console.log(`Matched ${updateResult.matchedCount} document(s) and modified ${updateResult.modifiedCount} document(s).`);
+
+        console.log('\n--- Executing DELETE ---');
+        
+        const deleteResult = await collection.deleteOne({ _id: generatedId });
+        console.log(`Deleted ${deleteResult.deletedCount} document(s).`);
+
+    } catch (error) {
+        console.error('An error occurred during database operations:', error);
+    } finally {
+
+        await client.close();
+        console.log('\nMongoDB connection closed.');
+    }
+}
+
+main().catch(console.error);
