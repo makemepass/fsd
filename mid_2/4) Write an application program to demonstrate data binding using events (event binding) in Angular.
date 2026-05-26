@@ -25,30 +25,10 @@ export class AppComponent {
 
 
 ###file name app.html###
-<div style="padding: 20px; font-family: Arial, sans-serif;">
-  <h2>Angular Event Binding Demonstration</h2>
-  <hr />
+<h3>Click Event Counter</h3>
+<p>Current Count: {{ counter }}</p>
+<button (click)="incrementCounter()">Increment</button>
 
-  <div style="margin-bottom: 20px;">
-    <h3>Example 1: Click Event Counter</h3>
-    <p>Current Count: <strong>{{ counter }}</strong></p>
-    
-    <button (click)="incrementCounter()">Increment Count</button>
-  </div>
-
-  <hr />
-
-  <div>
-    <h3>Example 2: Keystroke Input Event</h3>
-    <label for="user-input">Type something: </label>
-    
-    <input 
-      id="user-input"
-      type="text" 
-      (input)="onInputChange($event)" 
-      placeholder="Start typing..." 
-    />
-    
-    <p>Live Output: <span style="color: blue;">{{ typedMessage }}</span></p>
-  </div>
-</div>
+<h3>Keystroke Input Event</h3>
+<input type="text" (input)="onInputChange($event)" placeholder="Type here...">
+<p>Live Output: {{ typedMessage }}</p>
