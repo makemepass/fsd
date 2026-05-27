@@ -27,3 +27,16 @@ export default class CBC extends Component {
     );
   }
 }
+
+
+
+###FBC.jsx###
+import React from 'react';
+
+export default function FBC() {
+  return (
+    <div>
+      <h1>Function Component</h1>
+    </div>
+  );
+}
