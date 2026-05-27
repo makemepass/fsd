@@ -1,0 +1,33 @@
+import React, { useState } from 'react';
+
+function WelcomeMessage(props) {
+  return (
+    <div style={{ color: 'blue' }}>
+      <h3>Welcome back, {props.name}!</h3>
+    </div>
+  );
+}
+
+export default function App() {
+  const [user, setUser] = useState('Guest');
+
+  return (
+    <div>
+      <h2>React Data Binding: State and Props</h2>
+      <hr />
+
+      {/* Demonstrating State */}
+      <p>Current State Value: <strong>{user}</strong></p>
+      
+      {/* Buttons that modify our local State */}
+      <button onClick={() => setUser('Alice')}>Set user to Alice</button>
+      <button onClick={() => setUser('Bob')}>Set user to Bob</button>
+
+      <hr />
+
+      {/* Demonstrating Props */}
+      {/* We are passing our 'user' state DOWN into the child component as a custom attribute named 'name' */}
+      <WelcomeMessage name={user} />
+    </div>
+  );
+}
