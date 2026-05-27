@@ -1,0 +1,59 @@
+###app.ts###
+import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { CommonModule } from '@angular/common';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [RouterOutlet, CommonModule], 
+  templateUrl: './app.html'
+})
+export class App {
+  isVisible: boolean = true;
+  fruits: string[] = ['Apple', 'Banana', 'Orange', 'Grapes'];
+  selectedColor: string = 'red';
+  toggleVisibility(): void {
+    this.isVisible = !this.isVisible;
+  }
+  changeColor(color: string): void {
+    this.selectedColor = color;
+  }
+}
+
+###app.html###
+<div>
+  <h4>ngIf</h4>
+  <p *ngIf="isVisible">This element is visible because 'isVisible' is true</p>
+  
+  <button (click)="toggleVisibility()" style="padding: 5px 10px; margin-bottom: 20px;">
+    Toggle Visibility
+  </button>
+
+  <hr>
+
+  <h4>ngFor</h4>
+  <ul>
+    <li *ngFor="let fruit of fruits; let i = index">
+      {{ i + 1 }}. {{ fruit }}
+    </li>
+  </ul>
+
+  <hr>
+
+  <h4>ngSwitch</h4>
+  <div [ngSwitch]="selectedColor">
+    <p *ngSwitchCase="'red'">The color is red!</p>
+    <p *ngSwitchCase="'blue'">The color is blue!</p>
+    <p *ngSwitchCase="'green'">The color is green!</p>
+    <p *ngSwitchCase="'yellow'">The color is yellow!</p>
+    <p *ngSwitchDefault>Unknown color selection.</p>
+  </div>
+
+  <div style="border: 1px solid black; display: inline-block; padding: 10px;">
+    <button (click)="changeColor('red')">Red</button> /
+    <button (click)="changeColor('blue')">Blue</button> /
+    <button (click)="changeColor('green')">Green</button> /
+    <button (click)="changeColor('yellow')">Yellow</button>
+  </div>
+</div>
