@@ -1,32 +1,18 @@
 var express = require('express');
 var app = express();
 const port = 8089;
-
-// Static home route
 app.get('/', function(req, res) {
     res.send('Server home page');
 });
-
-// --- DEMONSTRATING ROUTE PARAMETERS ---
-
-// Example 1: Single route parameter (:id)
-// URL Example: http://localhost:8089/product/45
 app.get('/product/:id', function(req, res) {
-    // Route parameters are stored inside the req.params object
     const productId = req.params.id; 
     res.send(`Displaying details for Product ID: ${productId}`);
 });
-
-// Example 2: Multiple route parameters (:category and :itemId)
-// URL Example: http://localhost:8089/shop/electronics/laptop
 app.get('/shop/:category/:itemId', function(req, res) {
     const category = req.params.category;
     const itemId = req.params.itemId;
-    
     res.send(`Category: ${category} | Item Name/ID: ${itemId}`);
 });
-
-
 app.listen(port, () => {
     console.log('Server is running at port ' + port);
 });
