@@ -1,0 +1,62 @@
+import React, { useState } from 'react';
+
+export default function App() {
+  const [email, setEmail] = useState('');
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+  const validateEmail = (value) => {
+    setEmail(value);
+    setSuccess(''); // Clear success text while user edits text
+    const hasAtSymbol = value.includes('@');
+    const endsWithCom = value.endsWith('.com');
+    const hasCharactersBeforeAt = value.indexOf('@') > 0;
+
+    if (!value) {
+      setError('Email field cannot be empty!');
+    } else if (!hasAtSymbol) {
+      setError('Missing character: Email must contain an "@" symbol.');
+    } else if (!hasCharactersBeforeAt) {
+      setError('Invalid format: There must be characters before the "@" symbol.');
+    } else if (!endsWithCom) {
+      setError('Missing domain: Email must end with a proper extension like ".com".');
+    } else {
+      setError(''); // Clear error if all rules pass successfully
+    }
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault(); 
+    if (email && !error) {
+      setSuccess('Form submitted successfully!');
+    } else if (!email) {
+      setError('Please fill out the email field first.');
+    }
+  };
+
+  return (
+    <div style={{ padding: '20px', fontFamily: 'Arial' }}>
+      <h2>React Email Form Validation (No Regex)</h2>
+      <hr />
+
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Email Address: </label>
+          <input 
+            type="text" 
+            value={email} 
+            onChange={(e) => validateEmail(e.target.value)} 
+            placeholder="user@example.com"
+          />
+        </div>
+
+        {/* Condition Check: Show error text in red */}
+        {error && <p style={{ color: 'red', fontSize: '14px' }}>{error}</p>}
+
+        {/* Condition Check: Show success text in green */}
+        {success && <p style={{ color: 'green', fontWeight: 'bold' }}>{success}</p>}
+
+        <br />
+        <button type="submit">Submit Form</button>
+      </form>
+    </div>
+  );
+}
