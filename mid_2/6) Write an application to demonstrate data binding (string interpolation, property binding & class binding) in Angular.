@@ -1,0 +1,39 @@
+###app.ts###
+import { Component, signal } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [RouterOutlet],
+  templateUrl: './app.html'
+})
+export class App {
+  // Application data properties
+  protected readonly title = signal('databinding');
+  title1 = 'databind';
+  isDisabled: boolean = true;
+  isActive: boolean = true;
+}
+
+
+
+###app.html###
+<h4>String Interpolation</h4>
+<p>Result (100 + 20): {{ 100 + 20 }}</p>
+<p>Signal Title: {{ title() }}</p>
+<p>Standard Title: {{ title1 }}</p>
+
+<hr>
+
+<h4>Property Binding</h4>
+<label>Name: </label>
+<input type="text">
+<button [disabled]="isDisabled">Submit</button>
+
+<hr>
+
+<h4>Class Binding</h4>
+<h1 [class]="isActive ? 'active' : 'inactive'">
+  Welcome to Class Binding
+</h1>
