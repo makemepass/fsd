@@ -1,0 +1,24 @@
+###app.ts###
+import { Component, signal } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { FormsModule } from '@angular/forms'; 
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [RouterOutlet, FormsModule], 
+  templateUrl: './app.html'
+})
+export class App {
+  protected readonly title = signal('two way binding'); 
+  text = ''; // This variable will sync live with the input field
+}
+
+
+###app.html###
+<div>
+  <h2>Two-Way Data Binding Demonstration</h2>
+  <label>Enter text: </label>
+  <input [(ngModel)]="text" placeholder="Type something..." />
+  <p>You entered: <strong>{{ text }}</strong></p>
+</div>
