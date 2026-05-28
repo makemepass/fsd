@@ -1,61 +1,41 @@
 const { MongoClient } = require('mongodb');
-
-const url = 'mongodb://localhost:27017'; 
-const dbName = 'inventoryDB';
-const collectionName = 'products';
+const url = 'mongodb://127.0.0.1:27017';
+const client = new MongoClient(url);
 
 async function main() {
-    const client = new MongoClient(url);
-
     try {
         await client.connect();
-        console.log('Successfully connected to MongoDB server');
-        
-        const db = client.db(dbName);
-        const collection = db.collection(collectionName);
-
-        await collection.deleteMany({}); // Clears collection for a predictable output
+        const db = client.db('labDB');
+        const collection = db.collection('products');
+        await collection.deleteMany({});
         await collection.insertMany([
-            { name: 'Laptop', price: 999.99, category: 'Electronics', stock: 10 },
-            { name: 'Wireless Mouse', price: 29.99, category: 'Electronics', stock: 150 },
-            { name: 'Mechanical Keyboard', price: 89.99, category: 'Electronics', stock: 45 },
-            { name: 'Monitor', price: 249.99, category: 'Electronics', stock: 20 },
-            { name: 'HDMI Cable', price: 14.99, category: 'Electronics', stock: 300 }
+            { name: 'Mouse', price: 20 },
+            { name: 'Keyboard', price: 80 },
+            { name: 'Laptop', price: 900 }
         ]);
-        console.log('Mock data seeded successfully.');
+        console.log('Successfully connected and setup data.');
 
-        console.log('\n--- Executing COUNT ---');
-        const electronicsCount = await collection.countDocuments({ category: 'Electronics' });
-        console.log(`Total items matching 'Electronics': ${electronicsCount}`);
+        console.log('\n--- 1. COUNT ---');
+        const total = await collection.countDocuments({});
+        console.log('Total items in collection:', total);
 
-        console.log('\n--- Executing SORT (Price: High to Low) ---');
-        const sortedProducts = await collection.find({})
-            .sort({ price: -1 }) 
-            .toArray();
-        
-        sortedProducts.forEach(p => console.log(` - ${p.name}: $${p.price}`));
+        console.log('\n--- 2. SORT ---');
+        const sorted = await collection.find({}).sort({ price: -1 }).toArray();
+        console.log('Highest priced item:', sorted[0].name, '-', sorted[0].price);
 
-        console.log('\n--- Executing LIMIT (Get exactly 2 items) ---');
-        const limitedProducts = await collection.find({})
-            .limit(2)
-            .toArray();
+        console.log('\n--- 3. LIMIT ---');
+        const limited = await collection.find({}).limit(2).toArray();
+        console.log('First 2 items:', limited[0].name, 'and', limited[1].name);
 
-        limitedProducts.forEach(p => console.log(` - ${p.name}`));
+        console.log('\n--- 4. SKIP ---');
+        const skipped = await collection.find({}).skip(2).toArray();
+        console.log('Item after skipping 2:', skipped[0].name);
 
-        console.log('\n--- Executing SKIP (Bypass first 3 items) ---');
-        const skippedProducts = await collection.find({})
-            .skip(3)
-            .toArray();
-
-        skippedProducts.forEach(p => console.log(` - ${p.name}`));
-
-    } catch (error) {
-        console.error('An error occurred:', error);
-    } finally {      
+    } catch (err) {
+        console.error('Error:', err);
+    } finally {
         await client.close();
-        console.log('\nMongoDB connection closed.');
+        console.log('\nDatabase connection closed.');
     }
 }
-
-// Run script
-main().catch(console.error);
+main();
