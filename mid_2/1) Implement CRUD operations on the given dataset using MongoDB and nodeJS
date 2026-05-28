@@ -20,8 +20,6 @@ async function main() {
             price: 29.99,
             category: 'Electronics',
             stock: 150,
-            tags: ['accessory', 'wireless'],
-            createdAt: new Date()
         };
         
         const createResult = await collection.insertOne(newProduct);
