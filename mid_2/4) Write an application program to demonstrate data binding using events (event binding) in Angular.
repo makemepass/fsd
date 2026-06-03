@@ -1,22 +1,16 @@
 ###file name app.ts###
 import { Component } from '@angular/core';
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  // Application Data States
   counter: number = 0;
   typedMessage: string = '';
-
-  // Method triggered by the click event
   incrementCounter(): void {
     this.counter++;
   }
-
-  // Method triggered by the input event, capturing user keystrokes
   onInputChange(event: any): void {
     this.typedMessage = event.target.value;
   }
@@ -28,7 +22,6 @@ export class AppComponent {
 <h3>Click Event Counter</h3>
 <p>Current Count: {{ counter }}</p>
 <button (click)="incrementCounter()">Increment</button>
-
 <h3>Keystroke Input Event</h3>
 <input type="text" (input)="onInputChange($event)" placeholder="Type here...">
 <p>Live Output: {{ typedMessage }}</p>
