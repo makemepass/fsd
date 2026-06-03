@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import FBC from './FBC';
 import CBC from './CBC';
-import './App.css'; // Optional styling file
+import './App.css'; 
 function App() {
   const [count, setCount] = useState(0);
   return (
@@ -32,7 +32,6 @@ export default class CBC extends Component {
 
 ###FBC.jsx###
 import React from 'react';
-
 export default function FBC() {
   return (
     <div>
