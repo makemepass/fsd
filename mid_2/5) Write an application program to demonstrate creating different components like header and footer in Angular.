@@ -1,10 +1,8 @@
 ###filename header.ts###
 import { Component } from '@angular/core';
-
 @Component({
   selector: 'app-header',
   standalone: true,
-  // HTML layout is written directly here using backticks (``)
   template: `
     <header style="background-color: #f4f4f4; padding: 10px; text-align: center;">
       <h1>MGIT Portal Header</h1>
@@ -17,7 +15,6 @@ export class Header {}
 
 ###filename footer.ts###
 import { Component } from '@angular/core';
-
 @Component({
   selector: 'app-footer',
   standalone: true,
@@ -35,20 +32,16 @@ import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Header } from './header';
 import { Footer } from './footer';
-
 @Component({
   selector: 'app-root',
   standalone: true,
-  // We include Header and Footer here so this component recognizes their tags
   imports: [RouterOutlet, Header, Footer],
   template: `
     <app-header></app-header>
-
     <main style="padding: 20px;">
       <h2>Main Content Area</h2>
       <p>Welcome to the main body of the application. The title is: {{ title() }}</p>
     </main>
-
     <app-footer></app-footer>
   `
 })
