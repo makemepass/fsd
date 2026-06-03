@@ -2,7 +2,6 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { FormsModule } from '@angular/forms'; 
-
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -11,7 +10,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class App {
   protected readonly title = signal('two way binding'); 
-  text = ''; // This variable will sync live with the input field
+  text = ''; 
 }
 
 
