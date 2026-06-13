@@ -1,0 +1,20 @@
+###8.	Program to demonstrate Applying Route Parameters in Express JS
+
+var express = require('express');
+var app = express();
+const port = 8089;
+app.get('/', function(req, res) {
+    res.send('Server home page');
+});
+app.get('/product/:id', function(req, res) {
+    const productId = req.params.id; 
+    res.send(`Displaying details for Product ID: ${productId}`);
+});
+app.get('/shop/:category/:itemId', function(req, res) {
+    const category = req.params.category;
+    const itemId = req.params.itemId;
+    res.send(`Category: ${category} | Item Name/ID: ${itemId}`);
+});
+app.listen(port, () => {
+    console.log('Server is running at port ' + port);
+});
