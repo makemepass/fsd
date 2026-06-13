@@ -1,0 +1,18 @@
+#Write a Node JS program to perform read, write, append, rename and delete operations on a file.
+
+
+const fs = require('fs');
+fs.writeFileSync('test.txt', 'Initial content');
+console.log('File written');
+
+const data = fs.readFileSync('test.txt', 'utf8');
+console.log('Read content:', data);
+
+fs.appendFileSync('test.txt', '\nAppended content');
+console.log('Content appended');
+
+fs.renameSync('test.txt', 'new_name.txt');
+console.log('File renamed');
+
+fs.unlinkSync('new_name.txt');
+console.log('File deleted');
