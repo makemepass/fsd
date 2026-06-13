@@ -1,0 +1,39 @@
+### Implement CRUD operations on the given dataset using MongoDB and nodeJS
+
+const { MongoClient } = require('mongodb');
+const url = 'mongodb://127.0.0.1:27017'; 
+const client = new MongoClient(url);
+async function main() {
+    try {
+        await client.connect();
+        const db = client.db('labDB');
+        const collection = db.collection('items');
+
+        console.log('\n--- CREATE ---');
+        const newItem = { _id: 101, name: 'Laptop', price: 500 };
+        await collection.insertOne(newItem);
+        console.log('Item inserted successfully!');
+
+        console.log('\n--- READ ---');
+        const foundItem = await collection.findOne({ _id: 101 });
+        console.log('Fetched Item:', foundItem);
+
+        console.log('\n--- UPDATE ---');
+        await collection.updateOne(
+            { _id: 101 }, 
+            { $set: { price: 450 } }
+        );
+        console.log('Item updated successfully!');
+
+        console.log('\n--- DELETE ---');
+        await collection.deleteOne({ _id: 101 });
+        console.log('Item deleted successfully!');
+
+    } catch (err) {
+        console.error('Error:', err);
+    } finally {
+        await client.close();
+        console.log('\nDatabase connection closed.');
+    }
+}
+main();
